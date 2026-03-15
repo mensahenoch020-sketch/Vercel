@@ -119,14 +119,14 @@
     .confidence-wrap { padding:0 20px 20px; }
     .confidence-label { display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:8px; }
     .confidence-track { height:6px; background:var(--accent); border-radius:3px; overflow:hidden; }
-    .confidence-fill { height:100%; border-radius:3px; background:var(--gold-gradient); width:0%; transition:width 1.2s ease; }
+    .confidence-fill { height:100%; border-radius:3px; background:var(--gold-gradient); transition:width 1.2s ease; }
     .date-strip { display:flex; gap:10px; overflow-x:auto; padding-bottom:8px; scrollbar-width:none; margin-bottom:20px; }
     .date-strip::-webkit-scrollbar { display:none; }
     .date-chip {
       flex-shrink:0; padding:10px 18px; border-radius:12px;
       border:1px solid var(--border); background:var(--card);
       color:var(--muted); font-size:12px; font-weight:500; cursor:pointer;
-      transition:var(--transition); text-align:center;
+      transition:var(--transition); text-align:center; min-width:64px;
     }
     .date-chip.active { background:var(--gold-glow); border-color:var(--gold); color:var(--gold); }
     .date-chip .day { font-size:11px; margin-bottom:2px; text-transform:uppercase; }
@@ -180,41 +180,39 @@
     }
     .accu-btn:active { opacity:0.85; transform:scale(0.98); }
     .accu-btn:disabled { opacity:0.5; cursor:not-allowed; }
-
-```
-/* Analysis result panel */
-.analysis-panel {
-  background:var(--card); border:1px solid rgba(226,194,117,0.2);
-  border-radius:16px; padding:20px; margin-top:16px;
-}
-.analysis-panel-title {
-  font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:2px;
-  color:var(--gold); margin-bottom:12px;
-}
-.analysis-text {
-  font-size:13px; color:var(--text); line-height:1.8;
-  white-space:pre-wrap; word-break:break-word;
-}
-
-.loading { display:flex; align-items:center; justify-content:center; padding:60px 20px; gap:12px; color:var(--muted); font-size:14px; }
-.spinner { width:20px; height:20px; border:2px solid var(--border); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; }
-.spinner-sm { width:16px; height:16px; border:2px solid rgba(0,0,0,0.2); border-top-color:#000; border-radius:50%; animation:spin 0.8s linear infinite; display:inline-block; vertical-align:middle; margin-right:8px; }
-@keyframes spin { to{transform:rotate(360deg)} }
-.empty { text-align:center; padding:60px 20px; color:var(--muted); }
-.empty-icon { font-size:48px; margin-bottom:16px; opacity:0.6; }
-.empty-text { font-size:15px; font-weight:500; max-width:250px; margin:0 auto; line-height:1.5; }
-.toast {
-  position:fixed; bottom:30px; left:50%;
-  transform:translateX(-50%) translateY(100px);
-  background:rgba(13,17,22,0.95); backdrop-filter:blur(10px);
-  border:1px solid var(--border-light); padding:12px 24px; border-radius:30px;
-  font-size:14px; font-weight:500; color:var(--text);
-  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
-  z-index:999; white-space:nowrap;
-}
-.toast.show { transform:translateX(-50%) translateY(0); }
-```
-
+    .analysis-panel {
+      background:var(--card); border:1px solid rgba(226,194,117,0.2);
+      border-radius:16px; padding:20px; margin-top:16px;
+    }
+    .analysis-panel-title {
+      font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:2px;
+      color:var(--gold); margin-bottom:12px;
+    }
+    .analysis-text { font-size:13px; color:var(--text); line-height:1.8; white-space:pre-wrap; word-break:break-word; }
+    .loading { display:flex; align-items:center; justify-content:center; padding:60px 20px; gap:12px; color:var(--muted); font-size:14px; }
+    .spinner { width:20px; height:20px; border:2px solid var(--border); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; }
+    .spinner-sm { width:16px; height:16px; border:2px solid rgba(0,0,0,0.2); border-top-color:#000; border-radius:50%; animation:spin 0.8s linear infinite; display:inline-block; vertical-align:middle; margin-right:8px; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .empty { text-align:center; padding:60px 20px; color:var(--muted); }
+    .empty-icon { font-size:48px; margin-bottom:16px; opacity:0.6; }
+    .empty-text { font-size:15px; font-weight:500; max-width:250px; margin:0 auto; line-height:1.5; }
+    .toast {
+      position:fixed; bottom:30px; left:50%;
+      transform:translateX(-50%) translateY(100px);
+      background:rgba(13,17,22,0.95); backdrop-filter:blur(10px);
+      border:1px solid var(--border-light); padding:12px 24px; border-radius:30px;
+      font-size:14px; font-weight:500; color:var(--text);
+      transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      z-index:999; white-space:nowrap;
+    }
+    .toast.show { transform:translateX(-50%) translateY(0); }
+    .refresh-btn {
+      display:flex; align-items:center; gap:6px; margin-bottom:16px;
+      font-size:12px; color:var(--muted); cursor:pointer;
+      background:none; border:1px solid var(--border);
+      padding:8px 14px; border-radius:10px; width:fit-content;
+    }
+    .refresh-btn:active { background:var(--accent); }
   </style>
 </head>
 <body>
@@ -228,10 +226,10 @@
 </div>
 
 <nav class="nav">
-  <button class="nav-btn active" onclick="switchView('dashboard',event)">⚡ Today</button>
-  <button class="nav-btn" onclick="switchView('browser',event)">📅 Matches</button>
-  <button class="nav-btn" onclick="switchView('history',event)">📂 History</button>
-  <button class="nav-btn" onclick="switchView('accumulator',event)">🎯 Builder</button>
+  <button class="nav-btn active" onclick="switchView('dashboard',this)">⚡ Today</button>
+  <button class="nav-btn" onclick="switchView('browser',this)">📅 Matches</button>
+  <button class="nav-btn" onclick="switchView('history',this)">📂 History</button>
+  <button class="nav-btn" onclick="switchView('accumulator',this)">🎯 Builder</button>
 </nav>
 
 <div id="view-dashboard" class="view active">
@@ -241,11 +239,12 @@
     <div class="stat-card"><div class="stat-value" id="stat-edge">—</div><div class="stat-label">Avg Edge</div></div>
   </div>
   <div class="section-label">TODAY'S SHARP PICKS</div>
-  <div id="dashboard-picks"><div class="loading"><div class="spinner"></div>Analysing markets...</div></div>
+  <div id="dashboard-picks"><div class="loading"><div class="spinner"></div>Loading picks...</div></div>
 </div>
 
 <div id="view-browser" class="view">
   <div class="date-strip" id="date-strip"></div>
+  <button class="refresh-btn" onclick="refreshFixtures()">🔄 Refresh fixtures</button>
   <div class="section-label">AVAILABLE MATCHES</div>
   <div id="browser-matches"><div class="loading"><div class="spinner"></div>Fetching fixtures...</div></div>
 </div>
@@ -265,291 +264,446 @@
 <div class="toast" id="toast"></div>
 
 <script>
-var SUPABASE_URL = "https://vqdhuatwrxbuqauyjikr.supabase.co";
-var SUPABASE_KEY = "sb_publishable_4IInF77McqoTUerJ5BoeBQ_J3LgHDYN";
-var REPLIT_URL = "https://a8ba9f4b-d494-43f0-9b70-6b2bb382f01b-00-3rr297cr6wliy.worf.replit.dev:5000";
+  // ── CONFIG ──
+  var SUPABASE_URL = "https://vqdhuatwrxbuqauyjikr.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_4IInF77McqoTUerJ5BoeBQ_J3LgHDYN";
+  var BOT_URL      = "https://a8ba9f4b-d494-43f0-9b70-6b2bb382f01b-00-3rr297cr6wliy.worf.replit.dev";
 
-var tg = window.Telegram && window.Telegram.WebApp;
-if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor('#05070a'); tg.setBackgroundColor('#05070a'); }
+  var tg = window.Telegram && window.Telegram.WebApp;
+  if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor('#05070a'); tg.setBackgroundColor('#05070a'); }
+  var userId      = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? String(tg.initDataUnsafe.user.id) : null;
+  var accumulator = [];
+  var selectedDate= getToday();
+  var matchCache  = {};
+  var historyRows = [];
+  var allFixtures = {};  // { "YYYY-MM-DD": [matches] }
 
-var userId = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user.id : null;
-var accumulator = [];
-var selectedDate = getToday();
-var matchCache = {};
-var historyRows = [];
+  function getToday() { return new Date().toISOString().slice(0,10); }
 
-function getToday() { return new Date().toISOString().slice(0,10); }
-
-function formatDate(d) {
-  return new Date(d+'T00:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
-}
-
-async function supaFetch(path) {
-  try {
-    var r = await fetch(SUPABASE_URL+'/rest/v1/'+path, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer '+SUPABASE_KEY }
-    });
-    return r.ok ? await r.json() : null;
-  } catch(e) { return null; }
-}
-
-function switchView(name, e) {
-  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
-  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
-  document.getElementById('view-'+name).classList.add('active');
-  if (e && e.target) e.target.classList.add('active');
-  if (name==='browser') loadBrowser();
-  if (name==='history') loadHistory();
-  if (name==='accumulator') renderAccumulator();
-  if (name==='dashboard') {
-    setTimeout(function(){
-      document.querySelectorAll('.confidence-fill').forEach(function(el){
-        el.style.width = el.getAttribute('data-width');
+  // ── SUPABASE ──
+  async function supaFetch(path) {
+    try {
+      var r = await fetch(SUPABASE_URL+'/rest/v1/'+path, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer '+SUPABASE_KEY }
       });
-    }, 80);
+      return r.ok ? await r.json() : null;
+    } catch(e) { return null; }
   }
-}
 
-function showToast(msg) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, 2500);
-}
-
-function escHtml(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function confBar(pct) {
-  return '<div class="confidence-wrap"><div class="confidence-label"><span>AuraAI Confidence</span><span style="color:var(--gold)">'+pct+'%</span></div><div class="confidence-track"><div class="confidence-fill" data-width="'+pct+'%" style="width:0%"></div></div></div>';
-}
-
-function pickCardHTML(p) {
-  var tc = p.tier<=1?'tier1':p.tier===2?'tier2':'tier3';
-  var tl = p.tier<=1?'SHARP VALUE':p.tier===2?'MODERATE':'SPECULATIVE';
-  return '<div class="pick-card '+tc+'"><div class="pick-header"><div><div class="pick-match">'+escHtml(p.match)+'</div><div class="pick-league">'+escHtml(p.league)+'</div></div><div class="tier-badge">'+tl+'</div></div><div class="pick-body"><div class="pick-field"><div class="pick-field-label">Official Pick</div><div class="pick-field-value gold">'+escHtml(p.pick)+'</div></div><div class="pick-field"><div class="pick-field-label">Live Odds</div><div class="pick-field-value">'+escHtml(p.odds)+'</div></div><div class="pick-field"><div class="pick-field-label">Edge</div><div class="pick-field-value green">+'+p.edge+'%</div></div><div class="pick-field"><div class="pick-field-label">Stake</div><div class="pick-field-value">'+p.stake+'% BR</div></div></div>'+confBar(p.confidence)+'</div>';
-}
-
-// ── DASHBOARD ──
-async function loadDashboard() {
-  var picks = [];
-  if (userId) {
-    var data = await supaFetch('picks?user_id=eq.'+userId+'&order=created_at.desc&limit=20');
-    if (data && data.length) picks = parsePicks(data);
+  async function supaDelete(path) {
+    try {
+      await fetch(SUPABASE_URL+'/rest/v1/'+path, {
+        method: 'DELETE',
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer '+SUPABASE_KEY,
+                   'Prefer': 'return=minimal' }
+      });
+    } catch(e) {}
   }
-  if (!picks.length) picks = [{match:'Awaiting Data',league:'AuraAI Analytics',pick:'Pending',odds:'—',edge:0,confidence:0,tier:2,stake:0}];
-  var isDemo = picks[0].edge===0;
-  var sharp = picks.filter(function(p){ return p.tier===1; }).length;
-  var avgEdge = picks.length ? (picks.reduce(function(s,p){ return s+p.edge; },0)/picks.length).toFixed(1) : '—';
-  document.getElementById('stat-picks').textContent = isDemo?'—':picks.length;
-  document.getElementById('stat-sharp').textContent = isDemo?'—':sharp;
-  document.getElementById('stat-edge').textContent = isDemo?'—':avgEdge+'%';
-  var el = document.getElementById('dashboard-picks');
-  if (isDemo) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">⚽</div><div class="empty-text">Request picks from the bot to populate your dashboard</div></div>';
-    return;
-  }
-  var seen={}, unique=[];
-  picks.forEach(function(p){ var k=p.match+'|'+p.pick; if(!seen[k]){ seen[k]=true; unique.push(p); } });
-  el.innerHTML = unique.map(pickCardHTML).join('');
-  setTimeout(function(){
-    document.querySelectorAll('.confidence-fill').forEach(function(el){ el.style.width=el.getAttribute('data-width'); });
-  },120);
-}
 
-function parsePicks(rows) {
-  var out=[];
-  rows.forEach(function(row){
-    var a=row.analysis||'';
-    var mM=a.match(/MATCH:\s*(.+)/i), lM=a.match(/LEAGUE:\s*(.+)/i), pM=a.match(/OFFICIAL PICK:\s*(.+)/i);
-    var oM=a.match(/LIVE ODDS:\s*(.+)/i), eM=a.match(/Edge identified:\s*\+?([\d.]+)%/i);
-    var cM=a.match(/probability:\s*([\d.]+)%/i), tM=a.match(/TIER\s*(\d)/i), sM=a.match(/stake:\s*([\d.]+)%/i);
-    if(mM&&pM) out.push({
-      match:mM[1].trim(), league:lM?lM[1].trim():'Global Markets',
-      pick:pM[1].trim(), odds:oM?oM[1].trim():'—',
-      edge:eM?parseFloat(eM[1]):5, confidence:cM?Math.round(parseFloat(cM[1])):65,
-      tier:tM?parseInt(tM[1]):2, stake:sM?parseFloat(sM[1]):2
+  // ── NAV ──
+  function switchView(name, btn) {
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+    document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('view-'+name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    if (name==='browser')     loadBrowser();
+    if (name==='history')     loadHistory();
+    if (name==='accumulator') renderAccumulator();
+    if (name==='dashboard')   loadDashboard();
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 2500);
+  }
+
+  function escHtml(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── CONFIDENCE BAR ──
+  function confBar(pct) {
+    var w = Math.min(Math.max(parseInt(pct)||0, 0), 100);
+    return '<div class="confidence-wrap">'
+      + '<div class="confidence-label"><span>AuraAI Confidence</span>'
+      + '<span style="color:var(--gold)">'+w+'%</span></div>'
+      + '<div class="confidence-track">'
+      + '<div class="confidence-fill" style="width:'+w+'%"></div>'
+      + '</div></div>';
+  }
+
+  function pickCardHTML(p) {
+    var tc = p.edge >= 10 ? 'tier1' : p.edge >= 5 ? 'tier2' : 'tier3';
+    var tl = p.edge >= 10 ? 'SHARP VALUE' : p.edge >= 5 ? 'MODERATE' : 'SPECULATIVE';
+    return '<div class="pick-card '+tc+'">'
+      + '<div class="pick-header"><div>'
+      + '<div class="pick-match">'+escHtml(p.match)+'</div>'
+      + '<div class="pick-league">'+escHtml(p.league)+'</div>'
+      + '</div><div class="tier-badge">'+tl+'</div></div>'
+      + '<div class="pick-body">'
+      + '<div class="pick-field"><div class="pick-field-label">Official Pick</div>'
+      + '<div class="pick-field-value gold">'+escHtml(p.pick)+'</div></div>'
+      + '<div class="pick-field"><div class="pick-field-label">Live Odds</div>'
+      + '<div class="pick-field-value">'+escHtml(p.odds)+'</div></div>'
+      + '<div class="pick-field"><div class="pick-field-label">Edge</div>'
+      + '<div class="pick-field-value green">+'+p.edge+'%</div></div>'
+      + '<div class="pick-field"><div class="pick-field-label">Stake</div>'
+      + '<div class="pick-field-value">'+p.stake+'% Bankroll</div></div>'
+      + '</div>'
+      + confBar(p.confidence)
+      + '</div>';
+  }
+
+  // ── DASHBOARD — auto-loads today's predictions ──
+  async function loadDashboard() {
+    var el = document.getElementById('dashboard-picks');
+    el.innerHTML = '<div class="loading"><div class="spinner"></div>Loading picks...</div>';
+
+    // Auto-delete history older than 6 hours
+    if (userId) {
+      var cutoff = new Date(Date.now() - 6*60*60*1000).toISOString();
+      supaDelete('picks?user_id=eq.'+userId+'&created_at=lt.'+cutoff);
+    }
+
+    var picks = [];
+    if (userId) {
+      var today = getToday();
+      var data  = await supaFetch('picks?user_id=eq.'+userId
+        +'&created_at=gte.'+today+'T00:00:00'
+        +'&order=created_at.desc&limit=30');
+      if (data && data.length) picks = parsePicks(data);
+    }
+
+    var sharp   = picks.filter(function(p){ return p.edge >= 10; }).length;
+    var avgEdge = picks.length
+      ? (picks.reduce(function(s,p){ return s+p.edge; },0)/picks.length).toFixed(1)
+      : '—';
+
+    document.getElementById('stat-picks').textContent = picks.length || '—';
+    document.getElementById('stat-sharp').textContent = picks.length ? sharp : '—';
+    document.getElementById('stat-edge').textContent  = picks.length ? avgEdge+'%' : '—';
+
+    if (!picks.length) {
+      el.innerHTML = '<div class="empty"><div class="empty-icon">⚽</div>'
+        + '<div class="empty-text">Ask the bot for predictions and they\'ll appear here automatically</div></div>';
+      return;
+    }
+
+    // Deduplicate by match+pick
+    var seen = {}, unique = [];
+    picks.forEach(function(p){
+      var k = p.match+'|'+p.pick;
+      if (!seen[k]) { seen[k]=true; unique.push(p); }
     });
-  });
-  return out;
-}
-
-// ── MATCH BROWSER ──
-function buildDateStrip() {
-  var strip=document.getElementById('date-strip');
-  strip.innerHTML='';
-  var days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  for(var i=0;i<7;i++){
-    var d=new Date(); d.setDate(d.getDate()+i);
-    var str=d.toISOString().slice(0,10);
-    var chip=document.createElement('div');
-    chip.className='date-chip'+(str===selectedDate?' active':'');
-    chip.innerHTML='<div class="day">'+days[d.getDay()]+'</div><div class="num">'+d.getDate()+'</div>';
-    (function(ds,ce){
-      ce.onclick=function(){
-        selectedDate=ds;
-        document.querySelectorAll('.date-chip').forEach(function(c){ c.classList.remove('active'); });
-        ce.classList.add('active');
-        renderMatches(ds);
-      };
-    })(str,chip);
-    strip.appendChild(chip);
-  }
-}
-
-async function loadBrowser() { buildDateStrip(); renderMatches(selectedDate); }
-
-async function renderMatches(date) {
-  var el=document.getElementById('browser-matches');
-  el.innerHTML='<div class="loading"><div class="spinner"></div>Fetching fixtures...</div>';
-  if(matchCache[date]){ displayMatches(matchCache[date],el); return; }
-  var data=await supaFetch('fixtures_cache?cache_key=eq.'+date+'&limit=1');
-  if(data&&data.length){
-    try{ var m=JSON.parse(data[0].matches||'[]'); matchCache[date]=m; displayMatches(m,el); return; }catch(e){}
-  }
-  el.innerHTML='<div class="empty"><div class="empty-icon">📡</div><div class="empty-text">No cached fixtures yet. Ask the bot "give me matches for '+formatDate(date)+'"</div></div>';
-}
-
-function displayMatches(matches,el) {
-  if(!matches||!matches.length){
-    el.innerHTML='<div class="empty"><div class="empty-icon">📭</div><div class="empty-text">No matches found</div></div>';
-    return;
-  }
-  var html='';
-  matches.forEach(function(m,i){
-    var inA=accumulator.some(function(a){ return a.match===m.match; });
-    html+='<div class="match-row"><div style="flex:1"><div class="match-teams">'+escHtml(m.match)+'</div><div class="match-meta">'+escHtml(m.league)+' &bull; '+m.date+'</div></div><div class="match-add-btn'+(inA?' added':'')+'" onclick="toggleAccu('+i+')">'+( inA?'✓':'+')+'</div></div>';
-  });
-  el.innerHTML=html;
-}
-
-function toggleAccu(idx) {
-  var matches=matchCache[selectedDate]||[];
-  var m=matches[idx];
-  if(!m) return;
-  var existing=accumulator.findIndex(function(a){ return a.match===m.match; });
-  if(existing>=0){ accumulator.splice(existing,1); showToast('Removed from builder'); }
-  else { accumulator.push({match:m.match,league:m.league,date:m.date,odds:m.odds||'—'}); showToast('Added to builder ✓'); }
-  displayMatches(matches,document.getElementById('browser-matches'));
-  if(document.getElementById('view-accumulator').classList.contains('active')) renderAccumulator();
-}
-
-// ── HISTORY ──
-async function loadHistory() {
-  var el=document.getElementById('history-list');
-  if(!userId){
-    el.innerHTML='<div class="empty"><div class="empty-icon">🔒</div><div class="empty-text">Open via Telegram to view history</div></div>';
-    return;
-  }
-  var data=await supaFetch('picks?user_id=eq.'+userId+'&order=created_at.desc&limit=30');
-  if(!data||!data.length){
-    el.innerHTML='<div class="empty"><div class="empty-icon">📂</div><div class="empty-text">No prediction history yet.</div></div>';
-    return;
-  }
-  historyRows=data;
-  var html='';
-  data.forEach(function(row,i){
-    var dateStr=new Date(row.created_at).toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'});
-    var query=escHtml(row.user_input||'Pick Request');
-    var preview=escHtml((row.analysis||'').slice(0,100))+'...';
-    html+='<div class="history-card" id="hcard-'+i+'" onclick="toggleHistory('+i+')">';
-    html+='<div class="history-header"><div><div class="history-date">'+dateStr+'</div><div class="history-query">"'+query+'"</div></div><div class="history-arrow" id="harrow-'+i+'">▼</div></div>';
-    html+='<div class="history-preview" id="hprev-'+i+'">'+preview+'</div>';
-    html+='<div class="history-full" id="hfull-'+i+'"><div class="history-full-text" id="htext-'+i+'"></div></div>';
-    html+='</div>';
-  });
-  el.innerHTML=html;
-}
-
-function toggleHistory(i) {
-  var card=document.getElementById('hcard-'+i);
-  var text=document.getElementById('htext-'+i);
-  var prev=document.getElementById('hprev-'+i);
-  var isOpen=card.classList.contains('open');
-  historyRows.forEach(function(_,j){ var c=document.getElementById('hcard-'+j); if(c&&j!==i) c.classList.remove('open'); });
-  if(isOpen){ card.classList.remove('open'); prev.style.display=''; }
-  else {
-    card.classList.add('open');
-    prev.style.display='none';
-    if(!text.textContent && historyRows[i]) text.textContent=historyRows[i].analysis||'No analysis saved.';
-  }
-}
-
-// ── ACCUMULATOR ──
-function renderAccumulator() {
-  var legsEl=document.getElementById('accu-legs');
-  var summEl=document.getElementById('accu-summary-wrap');
-  var resultEl=document.getElementById('accu-result');
-  resultEl.innerHTML='';
-
-  if(!accumulator.length){
-    legsEl.innerHTML='<div class="empty"><div class="empty-icon">🎯</div><div class="empty-text">Go to Matches tab and tap + to add matches here</div></div>';
-    summEl.innerHTML='';
-    return;
+    el.innerHTML = unique.map(pickCardHTML).join('');
   }
 
-  var html='';
-  accumulator.forEach(function(leg,i){
-    html+='<div class="accu-leg"><div style="flex:1"><div style="font-weight:600;font-size:15px;">'+escHtml(leg.match)+'</div><div style="font-size:12px;color:var(--gold);margin-top:4px;">'+escHtml(leg.league)+'</div></div><div style="width:32px;height:32px;border-radius:8px;background:rgba(255,76,76,0.1);border:1px solid rgba(255,76,76,0.2);color:var(--red);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;" onclick="removeAccuLeg('+i+')">✕</div></div>';
-  });
-  legsEl.innerHTML=html;
-
-  summEl.innerHTML='<div class="accu-summary"><div class="accu-row"><span>Selections</span><span>'+accumulator.length+'</span></div><div class="accu-row"><span>Status</span><span style="color:var(--green)">Ready to analyse</span></div></div><button class="accu-btn" id="accu-analyse-btn" onclick="analyseAccumulator()">ANALYSE NOW ⚡</button>';
-}
-
-function removeAccuLeg(i) {
-  accumulator.splice(i,1);
-  renderAccumulator();
-  showToast('Removed');
-}
-
-async function analyseAccumulator() {
-  if(!accumulator.length){ showToast('Add matches first'); return; }
-
-  var btn=document.getElementById('accu-analyse-btn');
-  var resultEl=document.getElementById('accu-result');
-
-  // Disable button and show loading
-  btn.disabled=true;
-  btn.innerHTML='<span class="spinner-sm"></span>ANALYSING...';
-  resultEl.innerHTML='<div class="loading"><div class="spinner"></div>AuraAI is calculating edge...</div>';
-
-  var matchList=accumulator.map(function(a){ return {match:a.match,league:a.league,date:a.date||'',odds:a.odds||'—'}; });
-  var userInput='Build me a full accumulator analysis for these '+accumulator.length+' matches: '+accumulator.map(function(a){ return a.match; }).join(', ');
-
-  try {
-    var res=await fetch(REPLIT_URL+'/analyse', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({matches:matchList, user_input:userInput})
+  function parsePicks(rows) {
+    var out = [];
+    rows.forEach(function(row){
+      var a  = row.analysis || '';
+      var mM = a.match(/⚽\s*(.+?)\s*\n/);
+      if (!mM) mM = a.match(/MATCH:\s*(.+)/i);
+      var lM = a.match(/🏆\s*(.+?)\s*\|/);
+      if (!lM) lM = a.match(/LEAGUE:\s*(.+)/i);
+      var pM = a.match(/✅\s*PICK:\s*(.+)/i);
+      var oM = a.match(/💰\s*ODDS:\s*([\d.]+)/i);
+      var eM = a.match(/Edge identified:\s*\+?([\d.]+)%/i);
+      var cM = a.match(/calculated probability:\s*([\d.]+)%/i);
+      var sM = a.match(/Recommended stake:\s*([\d.]+)%/i);
+      // Use user_input as match name if parsing fails
+      var matchName = (mM ? mM[1].trim() : null) || row.user_input || 'Unknown Match';
+      if (pM || mM) {
+        out.push({
+          match:      matchName,
+          league:     lM ? lM[1].trim() : 'Global Markets',
+          pick:       pM ? pM[1].trim() : '—',
+          odds:       oM ? oM[1] : '—',
+          edge:       eM ? parseFloat(eM[1]) : 5,
+          confidence: cM ? Math.round(parseFloat(cM[1])) : 65,
+          stake:      sM ? parseFloat(sM[1]) : 2,
+        });
+      }
     });
-
-    if(!res.ok){ throw new Error('Server returned '+res.status); }
-
-    var data=await res.json();
-
-    if(data.error){ throw new Error(data.error); }
-
-    // Display result
-    resultEl.innerHTML='<div class="analysis-panel"><div class="analysis-panel-title">🎯 AURAAI ANALYSIS</div><div class="analysis-text" id="analysis-output"></div></div>';
-    document.getElementById('analysis-output').textContent=data.analysis||'No analysis returned.';
-
-    // Re-enable button
-    btn.disabled=false;
-    btn.innerHTML='ANALYSE AGAIN ⚡';
-
-    // Scroll to result
-    resultEl.scrollIntoView({behavior:'smooth',block:'start'});
-
-  } catch(err) {
-    resultEl.innerHTML='<div class="empty"><div class="empty-icon">⚠️</div><div class="empty-text">Analysis failed: '+escHtml(err.message)+'</div></div>';
-    btn.disabled=false;
-    btn.innerHTML='RETRY ⚡';
+    return out;
   }
-}
 
-document.addEventListener('DOMContentLoaded', loadDashboard);
+  // ── MATCH BROWSER — auto-loads from bot API, groups by date ──
+  function buildDateStrip() {
+    var strip = document.getElementById('date-strip');
+    strip.innerHTML = '';
+    var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    for (var i = 0; i < 7; i++) {
+      var d   = new Date(); d.setDate(d.getDate()+i);
+      var str = d.toISOString().slice(0,10);
+      var chip= document.createElement('div');
+      chip.className = 'date-chip'+(str===selectedDate?' active':'');
+      chip.innerHTML = '<div class="day">'+days[d.getDay()]+'</div><div class="num">'+d.getDate()+'</div>';
+      (function(ds, ce){
+        ce.onclick = function(){
+          selectedDate = ds;
+          document.querySelectorAll('.date-chip').forEach(function(c){ c.classList.remove('active'); });
+          ce.classList.add('active');
+          renderMatchesForDate(ds);
+        };
+      })(str, chip);
+      strip.appendChild(chip);
+    }
+  }
+
+  async function loadBrowser() {
+    buildDateStrip();
+    await fetchAllFixtures();
+    renderMatchesForDate(selectedDate);
+  }
+
+  async function refreshFixtures() {
+    matchCache = {};
+    allFixtures = {};
+    showToast('Refreshing fixtures...');
+    await fetchAllFixtures();
+    renderMatchesForDate(selectedDate);
+  }
+
+  async function fetchAllFixtures() {
+    // Try live bot /fixtures/range endpoint first
+    try {
+      var r = await fetch(BOT_URL+'/fixtures/range', {
+        signal: AbortSignal.timeout(10000)
+      });
+      if (r.ok) {
+        var data = await r.json();
+        if (data.by_date) {
+          allFixtures = data.by_date;
+          // Also populate matchCache per date
+          Object.keys(data.by_date).forEach(function(date){
+            matchCache[date] = data.by_date[date];
+          });
+          return;
+        }
+      }
+    } catch(e) {}
+
+    // Fallback: try single date from bot
+    try {
+      var r2 = await fetch(BOT_URL+'/fixtures', {
+        signal: AbortSignal.timeout(8000)
+      });
+      if (r2.ok) {
+        var d2 = await r2.json();
+        if (d2.fixtures && d2.fixtures.length) {
+          var today = getToday();
+          matchCache[today] = d2.fixtures;
+          allFixtures[today] = d2.fixtures;
+          return;
+        }
+      }
+    } catch(e) {}
+
+    // Final fallback: Supabase cache
+    var today = getToday();
+    var cached = await supaFetch('fixtures_cache?cache_key=eq.'+today+'&limit=1');
+    if (cached && cached.length) {
+      try {
+        var m = JSON.parse(cached[0].matches||'[]');
+        matchCache[today] = m;
+        allFixtures[today] = m;
+      } catch(e) {}
+    }
+  }
+
+  function renderMatchesForDate(date) {
+    var el = document.getElementById('browser-matches');
+    var matches = matchCache[date] || allFixtures[date] || [];
+
+    if (!matches.length) {
+      // Check nearby dates
+      var found = false;
+      Object.keys(allFixtures).forEach(function(d){
+        if (d === date && allFixtures[d].length) found = true;
+      });
+      if (!found) {
+        el.innerHTML = '<div class="empty"><div class="empty-icon">📅</div>'
+          + '<div class="empty-text">No fixtures for this date yet. Tap refresh or check another day.</div></div>';
+        return;
+      }
+    }
+
+    var html = '';
+    matches.forEach(function(m, i){
+      var inA = accumulator.some(function(a){ return a.match===m.match; });
+      html += '<div class="match-row">'
+        + '<div style="flex:1">'
+        + '<div class="match-teams">'+escHtml(m.match)+'</div>'
+        + '<div class="match-meta">'+escHtml(m.league)+' &bull; 🕐 '+escHtml(m.date)+'</div>'
+        + '</div>'
+        + '<div class="match-add-btn'+(inA?' added':'')+'" onclick="toggleAccu(\''+date+'\','+i+')">'
+        + (inA?'✓':'+')+'</div></div>';
+    });
+    el.innerHTML = html || '<div class="empty"><div class="empty-icon">📭</div><div class="empty-text">No matches found for this date</div></div>';
+  }
+
+  function toggleAccu(date, idx) {
+    var matches = matchCache[date] || allFixtures[date] || [];
+    var m = matches[idx];
+    if (!m) return;
+    var existing = accumulator.findIndex(function(a){ return a.match===m.match; });
+    if (existing >= 0) { accumulator.splice(existing,1); showToast('Removed from builder'); }
+    else { accumulator.push({match:m.match,league:m.league,date:m.date,odds:m.odds||'—'}); showToast('Added ✓'); }
+    renderMatchesForDate(date);
+    if (document.getElementById('view-accumulator').classList.contains('active')) renderAccumulator();
+  }
+
+  // ── HISTORY — 6 hour auto-delete, clean names ──
+  async function loadHistory() {
+    var el = document.getElementById('history-list');
+    if (!userId) {
+      el.innerHTML = '<div class="empty"><div class="empty-icon">🔒</div>'
+        + '<div class="empty-text">Open via Telegram to view your prediction history</div></div>';
+      return;
+    }
+
+    // Delete entries older than 6 hours
+    var cutoff = new Date(Date.now() - 6*60*60*1000).toISOString();
+    await supaDelete('picks?user_id=eq.'+userId+'&created_at=lt.'+cutoff);
+
+    var data = await supaFetch('picks?user_id=eq.'+userId+'&order=created_at.desc&limit=50');
+    if (!data || !data.length) {
+      el.innerHTML = '<div class="empty"><div class="empty-icon">📂</div>'
+        + '<div class="empty-text">No prediction history yet. Ask the bot for some picks!</div></div>';
+      return;
+    }
+    historyRows = data;
+    var html = '';
+    data.forEach(function(row, i){
+      var dateStr = new Date(row.created_at).toLocaleString('en-GB',{
+        day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'
+      });
+      // Show clean match name — user_input is now always "Home vs Away"
+      var matchName = escHtml(row.user_input || 'Prediction');
+      var preview   = escHtml((row.analysis||'').replace(/[🔥⚽🏆📅✅💰📊📈💎━]/g,'').slice(0,80))+'...';
+      html += '<div class="history-card" id="hcard-'+i+'" onclick="toggleHistory('+i+')">'
+        + '<div class="history-header"><div>'
+        + '<div class="history-date">'+dateStr+'</div>'
+        + '<div class="history-query">'+matchName+'</div>'
+        + '</div><div class="history-arrow" id="harrow-'+i+'">▼</div></div>'
+        + '<div class="history-preview" id="hprev-'+i+'">'+preview+'</div>'
+        + '<div class="history-full" id="hfull-'+i+'">'
+        + '<div class="history-full-text" id="htext-'+i+'"></div></div>'
+        + '</div>';
+    });
+    el.innerHTML = html;
+  }
+
+  function toggleHistory(i) {
+    var card  = document.getElementById('hcard-'+i);
+    var text  = document.getElementById('htext-'+i);
+    var prev  = document.getElementById('hprev-'+i);
+    var isOpen= card.classList.contains('open');
+    historyRows.forEach(function(_,j){
+      var c = document.getElementById('hcard-'+j);
+      if (c && j!==i) c.classList.remove('open');
+    });
+    if (isOpen) { card.classList.remove('open'); prev.style.display=''; }
+    else {
+      card.classList.add('open');
+      prev.style.display = 'none';
+      if (!text.textContent && historyRows[i])
+        text.textContent = historyRows[i].analysis || 'No analysis saved.';
+    }
+  }
+
+  // ── ACCUMULATOR BUILDER ──
+  function renderAccumulator() {
+    var legsEl   = document.getElementById('accu-legs');
+    var summEl   = document.getElementById('accu-summary-wrap');
+    var resultEl = document.getElementById('accu-result');
+    resultEl.innerHTML = '';
+
+    if (!accumulator.length) {
+      legsEl.innerHTML = '<div class="empty"><div class="empty-icon">🎯</div>'
+        + '<div class="empty-text">Go to Matches tab and tap + to add matches here</div></div>';
+      summEl.innerHTML = '';
+      return;
+    }
+
+    var html = '';
+    accumulator.forEach(function(leg, i){
+      html += '<div class="accu-leg">'
+        + '<div style="flex:1">'
+        + '<div style="font-weight:600;font-size:15px;">'+escHtml(leg.match)+'</div>'
+        + '<div style="font-size:12px;color:var(--gold);margin-top:4px;">'+escHtml(leg.league)+'</div>'
+        + '</div>'
+        + '<div style="width:32px;height:32px;border-radius:8px;background:rgba(255,76,76,0.1);border:1px solid rgba(255,76,76,0.2);color:var(--red);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;" onclick="removeAccuLeg('+i+')">✕</div>'
+        + '</div>';
+    });
+    legsEl.innerHTML = html;
+    summEl.innerHTML = '<div class="accu-summary">'
+      + '<div class="accu-row"><span>Selections</span><span>'+accumulator.length+'</span></div>'
+      + '<div class="accu-row"><span>Status</span><span style="color:var(--green)">Ready to analyse</span></div>'
+      + '</div>'
+      + '<button class="accu-btn" id="accu-btn" onclick="analyseAccumulator()">ANALYSE NOW ⚡</button>';
+  }
+
+  function removeAccuLeg(i) { accumulator.splice(i,1); renderAccumulator(); showToast('Removed'); }
+
+  async function analyseAccumulator() {
+    if (!accumulator.length) { showToast('Add matches first'); return; }
+    var btn      = document.getElementById('accu-btn');
+    var resultEl = document.getElementById('accu-result');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-sm"></span>ANALYSING...';
+    resultEl.innerHTML = '<div class="loading"><div class="spinner"></div>AuraAI calculating edge...</div>';
+
+    var matchList = accumulator.map(function(a){
+      return { match:a.match, league:a.league, date:a.date||'', odds:a.odds||'—' };
+    });
+    var userInput = 'Accumulator: '+accumulator.map(function(a){ return a.match; }).join(', ');
+
+    try {
+      var res = await fetch(BOT_URL+'/analyse', {
+        method:  'POST',
+        headers: { 'Content-Type':'application/json' },
+        body:    JSON.stringify({ matches:matchList, user_input:userInput }),
+        signal:  AbortSignal.timeout(30000)
+      });
+      if (!res.ok) throw new Error('Server error '+res.status);
+      var data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      resultEl.innerHTML = '<div class="analysis-panel">'
+        + '<div class="analysis-panel-title">🎯 AURAAI ACCUMULATOR ANALYSIS</div>'
+        + '<div class="analysis-text" id="accu-output"></div></div>';
+      document.getElementById('accu-output').textContent = data.analysis || 'No analysis returned.';
+      btn.disabled = false;
+      btn.innerHTML = 'ANALYSE AGAIN ⚡';
+      resultEl.scrollIntoView({ behavior:'smooth', block:'start' });
+    } catch(err) {
+      resultEl.innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div>'
+        + '<div class="empty-text">'+escHtml(err.message)+'</div></div>';
+      btn.disabled = false;
+      btn.innerHTML = 'RETRY ⚡';
+    }
+  }
+
+  // ── AUTO REFRESH every 5 minutes ──
+  setInterval(function(){
+    var activeView = document.querySelector('.view.active');
+    if (!activeView) return;
+    var id = activeView.id;
+    if (id === 'view-dashboard') loadDashboard();
+    if (id === 'view-browser')   fetchAllFixtures().then(function(){ renderMatchesForDate(selectedDate); });
+    if (id === 'view-history')   loadHistory();
+  }, 5 * 60 * 1000);
+
+  // ── INIT ──
+  document.addEventListener('DOMContentLoaded', function(){
+    loadDashboard();
+    // Pre-fetch fixtures in background
+    fetchAllFixtures();
+  });
 </script>
 
 </body>
